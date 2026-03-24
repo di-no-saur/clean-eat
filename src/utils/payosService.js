@@ -14,6 +14,16 @@ export const generateSignature = (data) => {
 // Tạo payment link từ PayOS
 export const createPaymentLink = async (orderData) => {
   try {
+    // Nếu đang chạy trên máy chủ thật (Production) -> Gọi Vercel Serverless Function
+    if (import.meta.env.PROD) {
+      const response = await axios.post('/api/create-payment-link', { orderData });
+      if (response.data && response.data.code !== '00') {
+        throw new Error(response.data.desc || 'PayOS Error');
+      }
+      return response.data;
+    }
+
+    // Nếu chạy dưới local máy dev (npm run dev) -> Dùng code tạo signature ở Client như cũ
     // Nếu không có API key, dùng mock mode
     if (!PAYOS_CLIENT_ID || !PAYOS_API_KEY) {
       console.warn('PayOS credentials not found, using mock mode');
