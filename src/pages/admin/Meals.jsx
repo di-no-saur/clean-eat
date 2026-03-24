@@ -3,6 +3,9 @@ import { useTranslation } from 'react-i18next';
 import api from '../../utils/api';
 import { FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import { mockMeals } from '../../utils/mockData';
+
+const MOCK_MODE = true;
 
 const Meals = () => {
   const { t } = useTranslation();
@@ -30,8 +33,12 @@ const Meals = () => {
 
   const fetchMeals = async () => {
     try {
-      const { data } = await api.get('/meals');
-      setMeals(data.data);
+      if (MOCK_MODE) {
+        setMeals(mockMeals);
+      } else {
+        const { data } = await api.get('/meals');
+        setMeals(data.data);
+      }
     } catch (error) {
       console.error('Error fetching meals:', error);
     } finally {

@@ -10,7 +10,8 @@ const MOCK_MODE = true;
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isVi = i18n.language === 'vi';
   const [meal, setMeal] = useState(null);
   const [related, setRelated] = useState([]);
   const [quantity, setQuantity] = useState(1);
@@ -97,10 +98,10 @@ const ProductDetail = () => {
 
           {/* Details */}
           <div>
-            <h1 className="text-4xl font-bold mb-4">{meal.name}</h1>
+            <h1 className="text-4xl font-bold mb-4">{isVi ? meal.nameVi : meal.name}</h1>
 
             <div className="bg-primary-100 rounded-lg p-4 mb-6">
-              <p className="text-primary-900">{meal.description}</p>
+              <p className="text-primary-900">{isVi ? meal.descriptionVi : meal.description}</p>
             </div>
 
             {/* Nutrition Info */}
@@ -165,7 +166,7 @@ const ProductDetail = () => {
             <div className="card p-6">
               <h3 className="font-bold text-lg mb-4">{t('ingredients')}</h3>
               <ul className="space-y-2">
-                {meal.ingredients.map((ingredient, index) => (
+                {(isVi && meal.ingredientsVi ? meal.ingredientsVi : meal.ingredients).map((ingredient, index) => (
                   <li key={index} className="flex items-center gap-2 text-gray-700">
                     <span className="w-2 h-2 bg-primary-600 rounded-full"></span>
                     {ingredient}
@@ -193,7 +194,7 @@ const ProductDetail = () => {
                     className="w-full h-48 object-cover"
                   />
                   <div className="p-4">
-                    <h4 className="font-semibold mb-2">{relMeal.name}</h4>
+                    <h4 className="font-semibold mb-2">{isVi ? relMeal.nameVi : relMeal.name}</h4>
                     <div className="flex justify-between items-center">
                       <span className="text-primary-600 font-bold">${relMeal.price}</span>
                       <span className="text-sm text-gray-500">{relMeal.calories} cal</span>

@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import api from '../../utils/api';
 import { toast } from 'react-toastify';
+import { mockUsers } from '../../utils/mockData';
+
+const MOCK_MODE = true;
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -12,8 +15,12 @@ const Users = () => {
 
   const fetchUsers = async () => {
     try {
-      const { data } = await api.get('/admin/users');
-      setUsers(data.data);
+      if (MOCK_MODE) {
+        setUsers(mockUsers);
+      } else {
+        const { data } = await api.get('/admin/users');
+        setUsers(data.data);
+      }
     } catch (error) {
       console.error('Error fetching users:', error);
     } finally {

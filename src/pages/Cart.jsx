@@ -5,7 +5,8 @@ import { useAuth } from '../context/AuthContext';
 import { FaTrash, FaPlus, FaMinus, FaArrowLeft } from 'react-icons/fa';
 
 const Cart = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isVi = i18n.language === 'vi';
   const { cart, loading, removeFromCart, updateCartItem } = useCart();
   const { isAuthenticated } = useAuth();
 
@@ -54,8 +55,8 @@ const Cart = () => {
                 />
 
                 <div className="flex-1">
-                  <h3 className="font-bold text-lg">{item.meal.name}</h3>
-                  <p className="text-gray-600 text-sm mb-2">{item.meal.description}</p>
+                  <h3 className="font-bold text-lg">{isVi ? item.meal.nameVi : item.meal.name}</h3>
+                  <p className="text-gray-600 text-sm mb-2">{isVi ? item.meal.descriptionVi : item.meal.description}</p>
                   <p className="text-primary-600 font-bold">${item.meal.price}</p>
                 </div>
 

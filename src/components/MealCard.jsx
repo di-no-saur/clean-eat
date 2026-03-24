@@ -4,7 +4,8 @@ import { FaShoppingCart, FaHeart } from 'react-icons/fa';
 import { useCart } from '../context/CartContext';
 
 const MealCard = ({ meal }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isVi = i18n.language === 'vi';
   const { addToCart } = useCart();
 
   const handleAddToCart = async (e) => {
@@ -37,14 +38,14 @@ const MealCard = ({ meal }) => {
 
       {/* Content */}
       <div className="p-4">
-        <h3 className="font-semibold text-lg mb-2 line-clamp-1">{meal.name}</h3>
+        <h3 className="font-semibold text-lg mb-2 line-clamp-1">{isVi ? meal.nameVi : meal.name}</h3>
         
         <div className="flex justify-between items-center mb-3">
           <span className="text-primary-600 font-bold text-lg">${meal.price}</span>
           <span className="text-sm text-gray-500">{meal.calories} cal</span>
         </div>
 
-        <p className="text-gray-600 text-sm mb-4 line-clamp-2">{meal.description}</p>
+        <p className="text-gray-600 text-sm mb-4 line-clamp-2">{isVi ? meal.descriptionVi : meal.description}</p>
 
         <div className="flex gap-2">
           <Link

@@ -9,7 +9,8 @@ const MOCK_MODE = true;
 
 const OrderDetail = () => {
   const { id } = useParams();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isVi = i18n.language === 'vi';
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -110,9 +111,9 @@ const OrderDetail = () => {
               </h2>
               <div className="space-y-4">
                 {order.items.map((item) => (
-                  <div key={item._id} className="flex justify-between items-center pb-4 border-b last:border-b-0">
+                  <div key={item._id || item.meal?._id} className="flex justify-between items-center pb-4 border-b last:border-b-0">
                     <div className="flex-1">
-                      <h4 className="font-semibold">{item.name}</h4>
+                      <h4 className="font-semibold">{isVi && item.meal?.nameVi ? item.meal.nameVi : item.name}</h4>
                       <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
                     </div>
                     <div className="text-right">

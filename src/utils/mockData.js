@@ -351,6 +351,33 @@ export const mockOrders = [
   }
 ];
 
+export const mockUsers = [
+  {
+    _id: 'user123',
+    name: 'Test User',
+    email: 'user@eatclean.com',
+    phone: '0907654321',
+    role: 'user',
+    isActive: true
+  },
+  {
+    _id: 'admin1',
+    name: 'Admin',
+    email: 'admin@eatclean.com',
+    phone: '0987654321',
+    role: 'admin',
+    isActive: true
+  },
+  {
+    _id: 'user124',
+    name: 'Jane Doe',
+    email: 'jane@eatclean.com',
+    phone: '0912345678',
+    role: 'user',
+    isActive: false
+  }
+];
+
 export const mockStats = {
   totalUsers: 156,
   totalOrders: 423,

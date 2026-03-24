@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import api from '../../utils/api';
 import { toast } from 'react-toastify';
+import { mockOrders } from '../../utils/mockData';
+
+const MOCK_MODE = true;
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -14,9 +17,17 @@ const Orders = () => {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const params = filter ? `?status=${filter}` : '';
-      const { data } = await api.get(`/admin/orders${params}`);
-      setOrders(data.data);
+      if (MOCK_MODE) {
+        let filtered = [...mockOrders];
+        if (filter) {
+          filtered = filtered.filter(order => order.orderStatus === filter);
+        }
+        setOrders(filtered);
+      } else {
+        const params = filter ? `?status=${filter}` : '';
+        const { data } = await api.get(`/admin/orders${params}`);
+        setOrders(data.data);
+      }
     } catch (error) {
       console.error('Error fetching orders:', error);
     } finally {

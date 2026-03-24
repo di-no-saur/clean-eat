@@ -4,6 +4,7 @@ import { useCart } from '../context/CartContext';
 import { useTranslation } from 'react-i18next';
 import { FaShoppingCart, FaUser, FaSignOutAlt, FaLanguage } from 'react-icons/fa';
 import { useState } from 'react';
+import logo from '../img/logo.jpg';
 
 const Header = () => {
   const { user, isAuthenticated, logout, isAdmin } = useAuth();
@@ -28,8 +29,8 @@ const Header = () => {
       <div className="container-custom py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="text-2xl font-bold text-primary-600">
-            🥗 EAT CLEAN
+          <Link to="/" className="flex items-center">
+            <img src={logo} alt="Eat Clean Logo" className="h-[50px] w-auto rounded-full object-contain" />
           </Link>
 
           {/* Navigation */}

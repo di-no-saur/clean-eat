@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { FaFacebook, FaInstagram, FaTiktok, FaPhone, FaEnvelope } from 'react-icons/fa';
+import logo from '../img/logo.jpg';
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -11,7 +12,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* About */}
           <div>
-            <h3 className="text-xl font-bold mb-4">🥗 EAT CLEAN</h3>
+            <img src={logo} alt="Eat Clean Logo" className="h-[60px] w-auto rounded-full object-contain mb-4" />
             <p className="text-gray-400">
               {t('storyText')}
             </p>

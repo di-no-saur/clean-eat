@@ -20,7 +20,8 @@ const BANK_INFO = {
 };
 
 const Checkout = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isVi = i18n.language === 'vi';
   const navigate = useNavigate();
   const { cart, clearCart } = useCart();
   const { user } = useAuth();
@@ -567,7 +568,7 @@ const Checkout = () => {
             <div className="space-y-3 mb-6 max-h-64 overflow-y-auto">
               {cart.items.map((item) => (
                 <div key={item.meal._id} className="flex justify-between text-sm">
-                  <span>{item.meal.name} x {item.quantity}</span>
+                  <span>{isVi ? item.meal.nameVi : item.meal.name} x {item.quantity}</span>
                   <span>${(item.meal.price * item.quantity).toFixed(2)}</span>
                 </div>
               ))}
