@@ -31,11 +31,15 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">{t('contactUs')}</h4>
             <ul className="space-y-2 text-gray-400">
-              <li className="flex items-center gap-2">
-                <FaPhone /> +84 123 456 789
+              <li>
+                <a href="tel:0888090839" className="flex items-center gap-2 hover:text-white transition">
+                  <FaPhone /> 0888090839
+                </a>
               </li>
-              <li className="flex items-center gap-2">
-                <FaEnvelope /> hello@eatclean.com
+              <li>
+                <a href="mailto:eatclean.cskh@gmail.com" className="flex items-center gap-2 hover:text-white transition">
+                  <FaEnvelope /> eatclean.cskh@gmail.com
+                </a>
               </li>
             </ul>
           </div>
@@ -44,13 +48,13 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">{t('followUs')}</h4>
             <div className="flex gap-4">
-              <a href="#" className="text-gray-400 hover:text-white transition text-2xl">
+              <a href="https://www.facebook.com/share/1CYbxZAA1w/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition text-2xl">
                 <FaFacebook />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition text-2xl">
+              <a href="https://www.instagram.com/eatclean2610?igsh=MWFlNWtydWx6Y3hzeA==" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition text-2xl">
                 <FaInstagram />
               </a>
-              <a href="#" className="text-gray-400 hover:text-white transition text-2xl">
+              <a href="https://www.tiktok.com/@eatclean_201?_r=1&_t=ZS-94wAqLKWeWL" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition text-2xl">
                 <FaTiktok />
               </a>
             </div>
