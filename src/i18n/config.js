@@ -143,8 +143,18 @@ const resources = {
       // About
       ourMission: 'Our Mission',
       missionText: 'To provide healthy, nutritious meals that help you achieve your fitness goals.',
+      missionDesc: "We believe that eating healthy should be convenient, affordable, and delicious. That's why we create meals that nourish your body and delight your taste buds.",
       ourStory: 'Our Story',
       storyText: 'EAT CLEAN started with a simple belief: healthy eating should be convenient and delicious.',
+      aboutSubtitle: 'Learn more about our mission and values',
+      storyDesc: 'Founded in 2024, EAT CLEAN has grown from a small idea to a trusted source of nutritious meals for thousands of customers. Our commitment to quality, freshness, and sustainability remains unchanged.',
+      ourValues: 'Our Values',
+      valQualityTitle: 'Quality',
+      valQualityDesc: 'We use only the freshest, highest quality ingredients',
+      valHealthTitle: 'Health',
+      valHealthDesc: 'Every meal is designed by nutrition experts',
+      valSustainTitle: 'Sustainability',
+      valSustainDesc: 'We care about our environment and future',
     }
   },
   vi: {
@@ -288,8 +298,18 @@ const resources = {
       // About
       ourMission: 'Sứ Mệnh',
       missionText: 'Cung cấp bữa ăn lành mạnh, giàu dinh dưỡng giúp bạn đạt được mục tiêu sức khỏe.',
+      missionDesc: 'Chúng tôi tin rằng việc ăn uống lành mạnh phải tiện lợi, giá cả phải chăng và ngon miệng. Đó là lý do chúng tôi tạo ra những bữa ăn vừa nuôi dưỡng cơ thể vừa thỏa mãn vị giác của bạn.',
       ourStory: 'Câu Chuyện',
       storyText: 'EAT CLEAN bắt đầu với niềm tin: ăn uống lành mạnh phải tiện lợi và ngon miệng.',
+      aboutSubtitle: 'Tìm hiểu thêm về sứ mệnh và giá trị của chúng tôi',
+      storyDesc: 'Được thành lập vào năm 2024, EAT CLEAN đã phát triển từ một ý tưởng nhỏ thành nguồn cung cấp bữa ăn dinh dưỡng đáng tin cậy cho hàng ngàn khách hàng. Cam kết của chúng tôi về chất lượng, sự tươi mới và bền vững vẫn không thay đổi.',
+      ourValues: 'Giá Trị Cốt Lõi',
+      valQualityTitle: 'Chất Lượng',
+      valQualityDesc: 'Chúng tôi chỉ sử dụng những nguyên liệu tươi ngon và chất lượng nhất',
+      valHealthTitle: 'Sức Khỏe',
+      valHealthDesc: 'Mỗi bữa ăn đều được thiết kế bởi các chuyên gia dinh dưỡng',
+      valSustainTitle: 'Bền Vững',
+      valSustainDesc: 'Chúng tôi quan tâm đến môi trường và tương lai chung',
     }
   }
 };
