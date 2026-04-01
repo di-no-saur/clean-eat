@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
-import api from '../../utils/api';
-import { toast } from 'react-toastify';
-import { mockOrders } from '../../utils/mockData';
+import { useEffect, useState } from "react";
+import api from "../../utils/api";
+import { toast } from "react-toastify";
+import { mockOrders } from "../../utils/mockData";
 
 const MOCK_MODE = true;
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
     fetchOrders();
@@ -18,41 +18,67 @@ const Orders = () => {
     try {
       setLoading(true);
       if (MOCK_MODE) {
-        let filtered = [...mockOrders];
+        let localOrders = JSON.parse(
+          localStorage.getItem("mockOrders") || "[]",
+        );
+
+        let filtered = [...localOrders];
+
         if (filter) {
-          filtered = filtered.filter(order => order.orderStatus === filter);
+          filtered = filtered.filter((order) => order.orderStatus === filter);
         }
+
         setOrders(filtered);
-      } else {
-        const params = filter ? `?status=${filter}` : '';
-        const { data } = await api.get(`/admin/orders${params}`);
-        setOrders(data.data);
       }
     } catch (error) {
-      console.error('Error fetching orders:', error);
+      console.error("Error fetching orders:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  const updateStatus = async (orderId, newStatus) => {
-    try {
-      await api.put(`/admin/orders/${orderId}/status`, { orderStatus: newStatus });
-      toast.success('Order status updated');
+  const updateStatus = (orderId, newStatus) => {
+    if (MOCK_MODE) {
+      const localOrders = JSON.parse(
+        localStorage.getItem("mockOrders") || "[]",
+      );
+
+      const updatedOrders = localOrders.map((order) =>
+        order._id === orderId ? { ...order, orderStatus: newStatus } : order,
+      );
+
+      localStorage.setItem("mockOrders", JSON.stringify(updatedOrders));
+
+      toast.success("Order status updated");
+
       fetchOrders();
-    } catch (error) {
-      toast.error('Error updating order');
+      return;
     }
+
+    // Real API
+    api.put(`/admin/orders/${orderId}/status`, { orderStatus: newStatus });
   };
 
-  const updatePayment = async (orderId, newStatus) => {
-    try {
-      await api.put(`/admin/orders/${orderId}/payment`, { paymentStatus: newStatus });
-      toast.success('Payment status updated');
+  const updatePayment = (orderId, newStatus) => {
+    if (MOCK_MODE) {
+      const localOrders = JSON.parse(
+        localStorage.getItem("mockOrders") || "[]",
+      );
+
+      const updatedOrders = localOrders.map((order) =>
+        order._id === orderId ? { ...order, paymentStatus: newStatus } : order,
+      );
+
+      localStorage.setItem("mockOrders", JSON.stringify(updatedOrders));
+
+      toast.success("Payment status updated");
+
       fetchOrders();
-    } catch (error) {
-      toast.error('Error updating payment');
+      return;
     }
+
+    // Real API
+    api.put(`/admin/orders/${orderId}/payment`, { paymentStatus: newStatus });
   };
 
   if (loading) return <div>Loading...</div>;
@@ -62,19 +88,23 @@ const Orders = () => {
       <div>
         <h2 className="text-2xl font-bold mb-4">Order Management</h2>
         <div className="flex gap-2 mb-4">
-          {['', 'confirmed', 'preparing', 'delivering', 'completed'].map((status) => (
-            <button
-              key={status}
-              onClick={() => setFilter(status)}
-              className={`px-4 py-2 rounded font-semibold transition ${
-                filter === status
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              }`}
-            >
-              {status ? status.charAt(0).toUpperCase() + status.slice(1) : 'All'}
-            </button>
-          ))}
+          {["", "confirmed", "preparing", "delivering", "completed"].map(
+            (status) => (
+              <button
+                key={status}
+                onClick={() => setFilter(status)}
+                className={`px-4 py-2 rounded font-semibold transition ${
+                  filter === status
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                }`}
+              >
+                {status
+                  ? status.charAt(0).toUpperCase() + status.slice(1)
+                  : "All"}
+              </button>
+            ),
+          )}
         </div>
       </div>
 
@@ -95,7 +125,9 @@ const Orders = () => {
               <tr key={order._id} className="border-b hover:bg-gray-50">
                 <td className="px-6 py-3 font-semibold">{order.orderNumber}</td>
                 <td className="px-6 py-3">{order.user?.name}</td>
-                <td className="px-6 py-3 font-bold text-green-600">${order.totalPrice}</td>
+                <td className="px-6 py-3 font-bold text-green-600">
+                  ${order.totalPrice}
+                </td>
                 <td className="px-6 py-3">
                   <select
                     value={order.orderStatus}
@@ -121,7 +153,9 @@ const Orders = () => {
                   </select>
                 </td>
                 <td className="px-6 py-3">
-                  <button className="text-blue-600 hover:underline text-xs">View</button>
+                  <button className="text-blue-600 hover:underline text-xs">
+                    View
+                  </button>
                 </td>
               </tr>
             ))}

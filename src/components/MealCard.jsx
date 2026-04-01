@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { FaShoppingCart, FaHeart } from 'react-icons/fa';
-import { useCart } from '../context/CartContext';
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { FaShoppingCart, FaHeart } from "react-icons/fa";
+import { useCart } from "../context/UseCart";
 
 const MealCard = ({ meal }) => {
   const { t, i18n } = useTranslation();
-  const isVi = i18n.language === 'vi';
+  const isVi = i18n.language === "vi";
   const { addToCart } = useCart();
 
   const handleAddToCart = async (e) => {
@@ -13,7 +13,7 @@ const MealCard = ({ meal }) => {
     try {
       await addToCart(meal._id, 1);
     } catch (error) {
-      console.error('Error adding to cart:', error);
+      console.error("Error adding to cart:", error);
     }
   };
 
@@ -38,27 +38,33 @@ const MealCard = ({ meal }) => {
 
       {/* Content */}
       <div className="p-4">
-        <h3 className="font-semibold text-lg mb-2 line-clamp-1">{isVi ? meal.nameVi : meal.name}</h3>
-        
+        <h3 className="font-semibold text-lg mb-2 line-clamp-1">
+          {isVi ? meal.nameVi : meal.name}
+        </h3>
+
         <div className="flex justify-between items-center mb-3">
-          <span className="text-primary-600 font-bold text-lg">${meal.price}</span>
+          <span className="text-primary-600 font-bold text-lg">
+            ${meal.price}
+          </span>
           <span className="text-sm text-gray-500">{meal.calories} cal</span>
         </div>
 
-        <p className="text-gray-600 text-sm mb-4 line-clamp-2">{isVi ? meal.descriptionVi : meal.description}</p>
+        <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+          {isVi ? meal.descriptionVi : meal.description}
+        </p>
 
         <div className="flex gap-2">
           <Link
             to={`/product/${meal._id}`}
             className="flex-1 btn-secondary text-center text-sm"
           >
-            {t('viewDetails')}
+            {t("viewDetails")}
           </Link>
           <button
             onClick={handleAddToCart}
             className="flex-1 btn-primary text-sm flex items-center justify-center gap-2"
           >
-            <FaShoppingCart /> {t('addToCart')}
+            <FaShoppingCart /> {t("addToCart")}
           </button>
         </div>
       </div>

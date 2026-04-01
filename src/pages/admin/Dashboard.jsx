@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import api from '../../utils/api';
-import { FaUsers, FaClipboard, FaUtensils, FaDollarSign } from 'react-icons/fa';
-import { mockStats } from '../../utils/mockData';
-
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import api from "../../utils/api";
+import { FaUsers, FaClipboard, FaUtensils, FaDollarSign } from "react-icons/fa";
+import { mockUsers, mockMeals } from "../../utils/mockData";
 const MOCK_MODE = true;
 
 const Dashboard = () => {
@@ -13,53 +12,77 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchStats();
+
+    window.addEventListener("storage", fetchStats);
+
+    return () => window.removeEventListener("storage", fetchStats);
   }, []);
 
   const fetchStats = async () => {
     try {
       if (MOCK_MODE) {
-        // Mock mode: use mock stats
-        setStats(mockStats);
+        const orders = JSON.parse(localStorage.getItem("mockOrders") || "[]");
+
+        let meals = JSON.parse(localStorage.getItem("meals") || "[]");
+        if (meals.length === 0) {
+          localStorage.setItem("meals", JSON.stringify(mockMeals));
+          meals = mockMeals;
+        }
+
+        const totalOrders = orders.length;
+
+        const totalRevenue = orders.reduce(
+          (sum, order) => sum + (order.totalPrice || 0),
+          0,
+        );
+
+        const recentOrders = [...orders]
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+          .slice(0, 5);
+
+        setStats({
+          totalUsers: mockUsers.length,
+          totalMeals: meals.length,
+          totalOrders,
+          totalRevenue,
+          recentOrders,
+        });
       } else {
-        const { data } = await api.get('/admin/stats');
+        const { data } = await api.get("/admin/stats");
         setStats(data.data);
       }
     } catch (error) {
-      console.error('Error fetching stats:', error);
+      console.error("Error fetching stats:", error);
     } finally {
       setLoading(false);
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   const statCards = [
     {
-      title: t('totalUsers'),
+      title: t("totalUsers"),
       value: stats?.totalUsers || 0,
       icon: FaUsers,
-      color: 'bg-blue-100 text-blue-600'
+      color: "bg-blue-100 text-blue-600",
     },
     {
-      title: t('totalOrders'),
+      title: t("totalOrders"),
       value: stats?.totalOrders || 0,
       icon: FaClipboard,
-      color: 'bg-green-100 text-green-600'
+      color: "bg-green-100 text-green-600",
     },
     {
-      title: t('products'),
+      title: t("products"),
       value: stats?.totalMeals || 0,
       icon: FaUtensils,
-      color: 'bg-orange-100 text-orange-600'
+      color: "bg-orange-100 text-orange-600",
     },
     {
-      title: t('totalRevenue'),
+      title: t("totalRevenue"),
       value: `$${stats?.totalRevenue || 0}`,
       icon: FaDollarSign,
-      color: 'bg-purple-100 text-purple-600'
-    }
+      color: "bg-purple-100 text-purple-600",
+    },
   ];
 
   return (
@@ -70,7 +93,9 @@ const Dashboard = () => {
           <div key={index} className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-600 text-sm font-semibold mb-2">{card.title}</p>
+                <p className="text-gray-600 text-sm font-semibold mb-2">
+                  {card.title}
+                </p>
                 <p className="text-3xl font-bold">{card.value}</p>
               </div>
               <div className={`p-4 rounded-lg ${card.color}`}>
@@ -100,13 +125,19 @@ const Dashboard = () => {
                 <tr key={order._id} className="border-b hover:bg-gray-50">
                   <td className="py-3 font-semibold">{order.orderNumber}</td>
                   <td className="py-3">{order.user?.name}</td>
-                  <td className="py-3 font-bold text-green-600">${order.totalPrice}</td>
+                  <td className="py-3 font-bold text-green-600">
+                    ${order.totalPrice}
+                  </td>
                   <td className="py-3">
                     <span className="px-2 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 capitalize">
                       {order.orderStatus}
                     </span>
                   </td>
-                  <td className="py-3">{new Date(order.createdAt).toLocaleDateString()}</td>
+                  <td className="py-3">
+                    {order.createdAt
+                      ? new Date(order.createdAt).toLocaleDateString()
+                      : "-"}
+                  </td>
                 </tr>
               ))}
             </tbody>

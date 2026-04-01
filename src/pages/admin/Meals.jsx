@@ -1,30 +1,33 @@
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import api from '../../utils/api';
-import { FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
-import { toast } from 'react-toastify';
-import { mockMeals } from '../../utils/mockData';
+import { useEffect, useState, useRef } from "react";
+import { useTranslation } from "react-i18next";
+import api from "../../utils/api";
+import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
+import { toast } from "react-toastify";
+import { mockMeals } from "../../utils/mockData";
 
 const MOCK_MODE = true;
 
 const Meals = () => {
   const { t } = useTranslation();
+  const formRef = useRef(null);
   const [meals, setMeals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({
-    name: '',
-    image: '',
-    price: '',
-    calories: '',
-    protein: '',
-    carb: '',
-    fat: '',
-    category: 'maintain',
-    ingredients: '',
-    description: '',
-    isBestSeller: false
+    name: "",
+    nameVi: "",
+    image: "",
+    price: "",
+    calories: "",
+    protein: "",
+    carb: "",
+    fat: "",
+    category: "maintain",
+    ingredients: "",
+    description: "",
+    descriptionVi: "",
+    isBestSeller: false,
   });
 
   useEffect(() => {
@@ -34,13 +37,21 @@ const Meals = () => {
   const fetchMeals = async () => {
     try {
       if (MOCK_MODE) {
-        setMeals(mockMeals);
+        let storedMeals = JSON.parse(localStorage.getItem("meals") || "[]");
+
+        // seed lần đầu
+        if (storedMeals.length === 0) {
+          localStorage.setItem("meals", JSON.stringify(mockMeals));
+          storedMeals = mockMeals;
+        }
+
+        setMeals(storedMeals);
       } else {
-        const { data } = await api.get('/meals');
+        const { data } = await api.get("/meals");
         setMeals(data.data);
       }
     } catch (error) {
-      console.error('Error fetching meals:', error);
+      console.error("Error fetching meals:", error);
     } finally {
       setLoading(false);
     }
@@ -48,64 +59,86 @@ const Meals = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const payload = {
-        ...formData,
-        price: parseFloat(formData.price),
-        calories: parseInt(formData.calories),
-        protein: parseInt(formData.protein),
-        carb: parseInt(formData.carb),
-        fat: parseInt(formData.fat),
-        ingredients: formData.ingredients.split(',').map(i => i.trim())
-      };
+
+    const payload = {
+      ...formData,
+      _id: Date.now().toString(),
+      price: parseFloat(formData.price),
+      calories: parseInt(formData.calories),
+      protein: parseInt(formData.protein),
+      carb: parseInt(formData.carb),
+      fat: parseInt(formData.fat),
+      ingredients: formData.ingredients.split(",").map((i) => i.trim()),
+    };
+
+    if (MOCK_MODE) {
+      let storedMeals = JSON.parse(localStorage.getItem("meals") || "[]");
 
       if (editingId) {
-        await api.put(`/admin/meals/${editingId}`, payload);
-        toast.success('Meal updated');
+        storedMeals = storedMeals.map((meal) =>
+          meal._id === editingId ? { ...meal, ...payload } : meal,
+        );
+
+        toast.success("Meal updated");
       } else {
-        await api.post('/admin/meals', payload);
-        toast.success('Meal created');
+        const newMeal = {
+          ...payload,
+          _id: Date.now().toString(),
+        };
+
+        storedMeals.push(newMeal);
+
+        toast.success("Meal created");
       }
+
+      localStorage.setItem("meals", JSON.stringify(storedMeals));
 
       resetForm();
       fetchMeals();
-    } catch (error) {
-      toast.error('Error saving meal');
+      return;
     }
   };
 
-  const handleDelete = async (id) => {
-    if (!window.confirm('Are you sure?')) return;
-    try {
-      await api.delete(`/admin/meals/${id}`);
-      toast.success('Meal deleted');
+  const handleDelete = (id) => {
+    if (!window.confirm("Are you sure?")) return;
+
+    if (MOCK_MODE) {
+      let storedMeals = JSON.parse(localStorage.getItem("meals") || "[]");
+
+      storedMeals = storedMeals.filter((meal) => meal._id !== id);
+
+      localStorage.setItem("meals", JSON.stringify(storedMeals));
+
+      toast.success("Meal deleted");
+
       fetchMeals();
-    } catch (error) {
-      toast.error('Error deleting meal');
+      return;
     }
+
+    api.delete(`/admin/meals/${id}`);
   };
 
   const resetForm = () => {
     setFormData({
-      name: '',
-      image: '',
-      price: '',
-      calories: '',
-      protein: '',
-      carb: '',
-      fat: '',
-      category: 'maintain',
-      ingredients: '',
-      description: '',
-      isBestSeller: false
+      name: "",
+      image: "",
+      price: "",
+      calories: "",
+      protein: "",
+      carb: "",
+      fat: "",
+      category: "maintain",
+      ingredients: "",
+      description: "",
+      isBestSeller: false,
     });
     setShowForm(false);
     setEditingId(null);
@@ -131,9 +164,13 @@ const Meals = () => {
 
       {/* Form */}
       {showForm && (
-        <div className="bg-white rounded-lg shadow p-6">
-          <h3 className="text-xl font-bold mb-4">{editingId ? 'Edit Meal' : 'Create Meal'}</h3>
-          <form onSubmit={handleSubmit} className="space-y-4 grid grid-cols-2 gap-4">
+        <div ref={formRef} className="bg-white rounded-lg shadow p-6">
+          <h3 className="text-xl font-bold mb-4">
+            {editingId ? "Edit Meal" : "Create Meal"}
+          </h3>
+
+          <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
+            {/* ENGLISH */}
             <div>
               <label className="block text-sm font-semibold mb-2">Name *</label>
               <input
@@ -147,7 +184,23 @@ const Meals = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-semibold mb-2">Image URL *</label>
+              <label className="block text-sm font-semibold mb-2">
+                Name (Vietnamese)
+              </label>
+              <input
+                type="text"
+                name="nameVi"
+                value={formData.nameVi}
+                onChange={handleChange}
+                className="w-full border rounded px-3 py-2"
+              />
+            </div>
+
+            {/* IMAGE */}
+            <div>
+              <label className="block text-sm font-semibold mb-2">
+                Image URL *
+              </label>
               <input
                 type="url"
                 name="image"
@@ -158,8 +211,11 @@ const Meals = () => {
               />
             </div>
 
+            {/* PRICE */}
             <div>
-              <label className="block text-sm font-semibold mb-2">Price *</label>
+              <label className="block text-sm font-semibold mb-2">
+                Price *
+              </label>
               <input
                 type="number"
                 name="price"
@@ -170,8 +226,11 @@ const Meals = () => {
               />
             </div>
 
+            {/* CALORIES */}
             <div>
-              <label className="block text-sm font-semibold mb-2">Calories *</label>
+              <label className="block text-sm font-semibold mb-2">
+                Calories *
+              </label>
               <input
                 type="number"
                 name="calories"
@@ -182,8 +241,11 @@ const Meals = () => {
               />
             </div>
 
+            {/* PROTEIN */}
             <div>
-              <label className="block text-sm font-semibold mb-2">Protein (g) *</label>
+              <label className="block text-sm font-semibold mb-2">
+                Protein (g) *
+              </label>
               <input
                 type="number"
                 name="protein"
@@ -194,8 +256,11 @@ const Meals = () => {
               />
             </div>
 
+            {/* CARB */}
             <div>
-              <label className="block text-sm font-semibold mb-2">Carbs (g) *</label>
+              <label className="block text-sm font-semibold mb-2">
+                Carbs (g) *
+              </label>
               <input
                 type="number"
                 name="carb"
@@ -206,8 +271,11 @@ const Meals = () => {
               />
             </div>
 
+            {/* FAT */}
             <div>
-              <label className="block text-sm font-semibold mb-2">Fat (g) *</label>
+              <label className="block text-sm font-semibold mb-2">
+                Fat (g) *
+              </label>
               <input
                 type="number"
                 name="fat"
@@ -218,8 +286,11 @@ const Meals = () => {
               />
             </div>
 
+            {/* CATEGORY */}
             <div>
-              <label className="block text-sm font-semibold mb-2">Category *</label>
+              <label className="block text-sm font-semibold mb-2">
+                Category *
+              </label>
               <select
                 name="category"
                 value={formData.category}
@@ -232,8 +303,11 @@ const Meals = () => {
               </select>
             </div>
 
+            {/* INGREDIENTS */}
             <div className="col-span-2">
-              <label className="block text-sm font-semibold mb-2">Ingredients (comma-separated) *</label>
+              <label className="block text-sm font-semibold mb-2">
+                Ingredients (comma-separated) *
+              </label>
               <input
                 type="text"
                 name="ingredients"
@@ -245,17 +319,34 @@ const Meals = () => {
               />
             </div>
 
+            {/* DESCRIPTION EN */}
             <div className="col-span-2">
-              <label className="block text-sm font-semibold mb-2">Description *</label>
+              <label className="block text-sm font-semibold mb-2">
+                Description *
+              </label>
               <textarea
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
                 className="w-full border rounded px-3 py-2 resize-none h-20"
                 required
-              ></textarea>
+              />
             </div>
 
+            {/* DESCRIPTION VI */}
+            <div className="col-span-2">
+              <label className="block text-sm font-semibold mb-2">
+                Description (Vietnamese)
+              </label>
+              <textarea
+                name="descriptionVi"
+                value={formData.descriptionVi}
+                onChange={handleChange}
+                className="w-full border rounded px-3 py-2 resize-none h-20"
+              />
+            </div>
+
+            {/* BEST SELLER */}
             <div className="col-span-2">
               <label className="flex items-center gap-2">
                 <input
@@ -265,14 +356,21 @@ const Meals = () => {
                   onChange={handleChange}
                   className="w-4 h-4"
                 />
-                <span className="text-sm font-semibold">Mark as Best Seller</span>
+                <span className="text-sm font-semibold">
+                  Mark as Best Seller
+                </span>
               </label>
             </div>
 
+            {/* BUTTONS */}
             <div className="col-span-2 flex gap-2">
-              <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+              <button
+                type="submit"
+                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+              >
                 Save
               </button>
+
               <button
                 type="button"
                 onClick={resetForm}
@@ -309,10 +407,13 @@ const Meals = () => {
                     onClick={() => {
                       setFormData({
                         ...meal,
-                        ingredients: meal.ingredients.join(', ')
+                        ingredients: meal.ingredients.join(", "),
                       });
                       setEditingId(meal._id);
                       setShowForm(true);
+                      setTimeout(() => {
+                        formRef.current?.scrollIntoView({ behavior: "smooth" });
+                      }, 100);
                     }}
                     className="text-blue-600 hover:text-blue-800"
                   >

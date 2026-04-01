@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import api from '../utils/api';
-import MealCard from '../components/MealCard';
-import { mockMeals } from '../utils/mockData';
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import api from "../utils/api";
+import MealCard from "../components/MealCard";
+import { mockMeals } from "../utils/mockData";
 
 const MOCK_MODE = true;
 
 const Menu = () => {
   const { t } = useTranslation();
   const [meals, setMeals] = useState([]);
-  const [category, setCategory] = useState('');
-  const [search, setSearch] = useState('');
+  const [category, setCategory] = useState("");
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -20,35 +20,38 @@ const Menu = () => {
   const fetchMeals = async () => {
     try {
       setLoading(true);
-      
+
       if (MOCK_MODE) {
-        // Mock mode: filter from local data
-        let filtered = [...mockMeals];
-        
+        // Lấy từ localStorage
+        const storedMeals = JSON.parse(localStorage.getItem("meals")) || [];
+
+        let filtered = [...storedMeals];
+
         if (category) {
-          filtered = filtered.filter(meal => meal.category === category);
+          filtered = filtered.filter((meal) => meal.category === category);
         }
-        
+
         if (search) {
           const searchLower = search.toLowerCase();
-          filtered = filtered.filter(meal => 
-            meal.name.toLowerCase().includes(searchLower) ||
-            meal.nameVi?.toLowerCase().includes(searchLower) ||
-            meal.description.toLowerCase().includes(searchLower)
+          filtered = filtered.filter(
+            (meal) =>
+              meal.name.toLowerCase().includes(searchLower) ||
+              meal.nameVi?.toLowerCase().includes(searchLower) ||
+              meal.description?.toLowerCase().includes(searchLower),
           );
         }
-        
+
         setMeals(filtered);
       } else {
         const params = new URLSearchParams();
-        if (category) params.append('category', category);
-        if (search) params.append('search', search);
+        if (category) params.append("category", category);
+        if (search) params.append("search", search);
 
         const { data } = await api.get(`/meals?${params}`);
         setMeals(data.data);
       }
     } catch (error) {
-      console.error('Error fetching meals:', error);
+      console.error("Error fetching meals:", error);
     } finally {
       setLoading(false);
     }
@@ -59,8 +62,10 @@ const Menu = () => {
       {/* Header */}
       <div className="bg-white border-b">
         <div className="container-custom py-8">
-          <h1 className="text-4xl font-bold mb-4">{t('menu')}</h1>
-          <p className="text-gray-600">Choose from our selection of healthy meals</p>
+          <h1 className="text-4xl font-bold mb-4">{t("menu")}</h1>
+          <p className="text-gray-600">
+            Choose from our selection of healthy meals
+          </p>
         </div>
       </div>
 
@@ -73,7 +78,9 @@ const Menu = () => {
 
               {/* Search */}
               <div className="mb-6">
-                <label className="block text-sm font-semibold mb-2">Search</label>
+                <label className="block text-sm font-semibold mb-2">
+                  Search
+                </label>
                 <input
                   type="text"
                   value={search}
@@ -85,15 +92,20 @@ const Menu = () => {
 
               {/* Category */}
               <div className="mb-6">
-                <label className="block text-sm font-semibold mb-2">Category</label>
+                <label className="block text-sm font-semibold mb-2">
+                  Category
+                </label>
                 <div className="space-y-2">
                   {[
-                    { value: '', label: t('allMeals') },
-                    { value: 'weight-loss', label: t('weightLoss') },
-                    { value: 'maintain', label: t('maintain') },
-                    { value: 'muscle-gain', label: t('muscleGain') }
+                    { value: "", label: t("allMeals") },
+                    { value: "weight-loss", label: t("weightLoss") },
+                    { value: "maintain", label: t("maintain") },
+                    { value: "muscle-gain", label: t("muscleGain") },
                   ].map((cat) => (
-                    <label key={cat.value} className="flex items-center cursor-pointer">
+                    <label
+                      key={cat.value}
+                      className="flex items-center cursor-pointer"
+                    >
                       <input
                         type="radio"
                         name="category"
