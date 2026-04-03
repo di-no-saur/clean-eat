@@ -1,9 +1,9 @@
 import CryptoJS from "crypto-js";
 import axios from "axios";
 
-const CLIENT_ID = process.env.VITE_PAYOS_CLIENT_ID || process.env.PAYOS_CLIENT_ID;
-const API_KEY = process.env.VITE_PAYOS_API_KEY || process.env.PAYOS_API_KEY;
-const CHECKSUM_KEY = process.env.VITE_PAYOS_CHECK_SUM_KEY || process.env.PAYOS_CHECKSUM_KEY;
+const PAYOS_CLIENT_ID = import.meta.env.VITE_PAYOS_CLIENT_ID;
+const PAYOS_API_KEY = import.meta.env.VITE_PAYOS_API_KEY;
+const PAYOS_CHECK_SUM_KEY = import.meta.env.VITE_PAYOS_CHECK_SUM_KEY;
 
 // Tạo chữ ký HMAC SHA256
 export const generateSignature = (data) => {
