@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FaShoppingCart, FaHeart } from "react-icons/fa";
 import { useCart } from "../context/UseCart";
-
+import { formatVND } from "../utils/formatCurrency";
 const MealCard = ({ meal }) => {
   const { t, i18n } = useTranslation();
   const isVi = i18n.language === "vi";
@@ -44,7 +44,7 @@ const MealCard = ({ meal }) => {
 
         <div className="flex justify-between items-center mb-3">
           <span className="text-primary-600 font-bold text-lg">
-            ${meal.price}
+            {formatVND(meal.price)}
           </span>
           <span className="text-sm text-gray-500">{meal.calories} cal</span>
         </div>

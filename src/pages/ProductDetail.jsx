@@ -11,7 +11,7 @@ import {
   FaTint,
 } from "react-icons/fa";
 import { mockMeals } from "../utils/mockData";
-
+import { formatVND } from "../utils/formatCurrency";
 const MOCK_MODE = true;
 
 const ProductDetail = () => {
@@ -102,11 +102,11 @@ const ProductDetail = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Image */}
-          <div className="card overflow-hidden">
+          <div className="card overflow-hidden h-[420px]">
             <img
               src={meal.image}
               alt={meal.name}
-              className="w-full h-96 object-cover"
+              className="w-full h-full object-cover"
             />
           </div>
 
@@ -159,7 +159,7 @@ const ProductDetail = () => {
               <div className="flex items-center justify-between mb-6">
                 <span className="text-gray-600">Price</span>
                 <span className="text-3xl font-bold text-primary-600">
-                  ${meal.price}
+                  {formatVND(meal.price)}
                 </span>
               </div>
 

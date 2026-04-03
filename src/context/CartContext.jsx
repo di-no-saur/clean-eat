@@ -85,6 +85,10 @@ export const CartProvider = ({ children }) => {
 
   const addToCart = async (mealId, quantity = 1) => {
     try {
+      if (!isAuthenticated) {
+        toast.warning("Please login to add items to cart");
+        return;
+      }
       if (MOCK_MODE) {
         const mockCart = { ...getMockCart() };
         mockCart.items = [...mockCart.items];

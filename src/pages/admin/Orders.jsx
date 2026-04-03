@@ -17,9 +17,16 @@ const Orders = () => {
   const fetchOrders = async () => {
     try {
       setLoading(true);
+
       if (MOCK_MODE) {
         let localOrders = JSON.parse(
           localStorage.getItem("mockOrders") || "[]",
+        );
+
+        // lọc order hợp lệ
+        localOrders = localOrders.filter(
+          (order) =>
+            order && order.orderNumber && order.totalPrice && order.user,
         );
 
         let filtered = [...localOrders];

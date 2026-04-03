@@ -1,13 +1,14 @@
-import CryptoJS from 'crypto-js';
-import axios from 'axios';
+import CryptoJS from "crypto-js";
+import axios from "axios";
 
-const PAYOS_CLIENT_ID = import.meta.env.VITE_PAYOS_CLIENT_ID;
-const PAYOS_API_KEY = import.meta.env.VITE_PAYOS_API_KEY;
-const PAYOS_CHECK_SUM_KEY = import.meta.env.VITE_PAYOS_CHECK_SUM_KEY;
+const PAYOS_CLIENT_ID = "73044e1d-00c0-4e9d-a7ca-54dd61163d4a";
+const PAYOS_API_KEY = "f53de674-6285-4d61-a5d3-f0b4a1971f80";
+const PAYOS_CHECK_SUM_KEY =
+  "d3b7315841ce1eab0dca3d96949625b8395fbe9b61f02a2ad5b90264427c24ea";
 
 // Tạo chữ ký HMAC SHA256
 export const generateSignature = (data) => {
-  const dataString = typeof data === 'string' ? data : JSON.stringify(data);
+  const dataString = typeof data === "string" ? data : JSON.stringify(data);
   return CryptoJS.HmacSHA256(dataString, PAYOS_CHECK_SUM_KEY).toString();
 };
 
@@ -16,9 +17,11 @@ export const createPaymentLink = async (orderData) => {
   try {
     // Nếu đang chạy trên máy chủ thật (Production) -> Gọi Vercel Serverless Function
     if (import.meta.env.PROD) {
-      const response = await axios.post('/api/create-payment-link', { orderData });
-      if (response.data && response.data.code !== '00') {
-        throw new Error(response.data.desc || 'PayOS Error');
+      const response = await axios.post("/api/create-payment-link", {
+        orderData,
+      });
+      if (response.data && response.data.code !== "00") {
+        throw new Error(response.data.desc || "PayOS Error");
       }
       return response.data;
     }
@@ -26,7 +29,7 @@ export const createPaymentLink = async (orderData) => {
     // Nếu chạy dưới local máy dev (npm run dev) -> Dùng code tạo signature ở Client như cũ
     // Nếu không có API key, dùng mock mode
     if (!PAYOS_CLIENT_ID || !PAYOS_API_KEY) {
-      console.warn('PayOS credentials not found, using mock mode');
+      console.warn("PayOS credentials not found, using mock mode");
       return {
         success: true,
         data: {
@@ -38,9 +41,15 @@ export const createPaymentLink = async (orderData) => {
     }
 
     const payload = {
-      orderCode: Number(String(orderData.orderCode).replace(/\D/g, '') || Date.now()), // Ensure orderCode is a number for PayOS
+      orderCode: Number(
+        String(orderData.orderCode).replace(/\D/g, "") || Date.now(),
+      ), // Ensure orderCode is a number for PayOS
       amount: Math.round(orderData.amount),
-      description: `EATCLEAN ${String(orderData.orderCode).substring(10)}`.substring(0, 25), // max 25 chars
+      description:
+        `EATCLEAN ${String(orderData.orderCode).substring(10)}`.substring(
+          0,
+          25,
+        ), // max 25 chars
       buyerName: orderData.buyerName,
       buyerEmail: orderData.buyerEmail,
       buyerPhone: orderData.buyerPhone,
@@ -56,39 +65,41 @@ export const createPaymentLink = async (orderData) => {
       cancelUrl: payload.cancelUrl,
       description: payload.description,
       orderCode: payload.orderCode,
-      returnUrl: payload.returnUrl
+      returnUrl: payload.returnUrl,
     };
 
     const sortedKeys = Object.keys(signatureData).sort();
-    const dataString = sortedKeys.map(key => `${key}=${signatureData[key]}`).join('&');
+    const dataString = sortedKeys
+      .map((key) => `${key}=${signatureData[key]}`)
+      .join("&");
     const signature = generateSignature(dataString);
 
     // Gửi request tới PayOS API
     const response = await axios.post(
-      '/payos-api/v2/payment-requests',
+      "/payos-api/v2/payment-requests",
       {
         ...payload,
         signature,
       },
       {
         headers: {
-          'x-client-id': PAYOS_CLIENT_ID,
-          'x-api-key': PAYOS_API_KEY,
-          'Content-Type': 'application/json',
+          "x-client-id": PAYOS_CLIENT_ID,
+          "x-api-key": PAYOS_API_KEY,
+          "Content-Type": "application/json",
         },
-      }
+      },
     );
 
-    if (response.data.code !== '00') {
-      console.error('PayOS API returned error:', response.data);
-      throw new Error(response.data.desc || 'PayOS Error');
+    if (response.data.code !== "00") {
+      console.error("PayOS API returned error:", response.data);
+      throw new Error(response.data.desc || "PayOS Error");
     }
 
     return response.data;
   } catch (error) {
-    console.error('PayOS Error:', error.response?.data || error.message);
+    console.error("PayOS Error:", error.response?.data || error.message);
     throw new Error(
-      error.response?.data?.message || 'Tạo link thanh toán thất bại'
+      error.response?.data?.message || "Tạo link thanh toán thất bại",
     );
   }
 };
@@ -104,22 +115,22 @@ export const verifyWebhook = (body, signature) => {
 export const getPaymentStatus = async (orderCode) => {
   try {
     if (!PAYOS_CLIENT_ID || !PAYOS_API_KEY) {
-      return { success: true, data: { status: 'PAID' } };
+      return { success: true, data: { status: "PAID" } };
     }
 
     const response = await axios.get(
       `/payos-api/v2/payment-requests/${orderCode}`,
       {
         headers: {
-          'x-client-id': PAYOS_CLIENT_ID,
-          'x-api-key': PAYOS_API_KEY,
+          "x-client-id": PAYOS_CLIENT_ID,
+          "x-api-key": PAYOS_API_KEY,
         },
-      }
+      },
     );
 
     return response.data;
   } catch (error) {
-    console.error('Get payment status error:', error);
+    console.error("Get payment status error:", error);
     throw error;
   }
 };
@@ -135,15 +146,15 @@ export const cancelPaymentLink = async (orderCode) => {
       `/payos-api/v2/payment-requests/${orderCode}`,
       {
         headers: {
-          'x-client-id': PAYOS_CLIENT_ID,
-          'x-api-key': PAYOS_API_KEY,
+          "x-client-id": PAYOS_CLIENT_ID,
+          "x-api-key": PAYOS_API_KEY,
         },
-      }
+      },
     );
 
     return response.data;
   } catch (error) {
-    console.error('Cancel payment error:', error);
+    console.error("Cancel payment error:", error);
     throw error;
   }
 };

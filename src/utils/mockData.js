@@ -1,5 +1,5 @@
 // Mock data for all entities when working without backend
-
+import { getMeals } from "./mockDb";
 export const mockMeals = [
   // DISHES
   {
@@ -517,13 +517,21 @@ export const calculateCartTotals = (items) => {
   let totalPrice = 0;
   let totalCalories = 0;
 
+  const meals = getMeals(); // lấy toàn bộ meal (mock + admin)
+
   items.forEach((item) => {
-    const meal = item.meal;
+    let meal;
 
-    if (!meal) return;
+    if (typeof item.meal === "object") {
+      meal = item.meal;
+    } else {
+      meal = meals.find((m) => m._id === item.meal);
+    }
 
-    totalPrice += meal.price * item.quantity;
-    totalCalories += meal.calories * item.quantity;
+    if (meal) {
+      totalPrice += Number(meal.price || 0) * item.quantity;
+      totalCalories += Number(meal.calories || 0) * item.quantity;
+    }
   });
 
   return {

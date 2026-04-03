@@ -4,6 +4,7 @@ import { useCart } from "../context/UseCart";
 import { useAuth } from "../context/AuthContext";
 import { FaTrash, FaPlus, FaMinus, FaArrowLeft } from "react-icons/fa";
 import { useEffect } from "react";
+import { formatVND } from "../utils/formatCurrency";
 const Cart = () => {
   const { t, i18n } = useTranslation();
   const isVi = i18n.language === "vi";
@@ -82,7 +83,7 @@ const Cart = () => {
                             : item.meal.description}
                         </p>
                         <p className="text-primary-600 font-bold">
-                          ${item.meal.price}
+                          {formatVND(item.meal.price)}
                         </p>
                       </div>
 
@@ -127,7 +128,7 @@ const Cart = () => {
             <div className="space-y-3 mb-6">
               <div className="flex justify-between text-gray-600">
                 <span>Subtotal:</span>
-                <span>${cart.totalPrice}</span>
+                <span>{formatVND(cart.totalPrice)}</span>
               </div>
               <div className="flex justify-between text-gray-600">
                 <span>Shipping:</span>
@@ -143,7 +144,9 @@ const Cart = () => {
 
             <div className="flex justify-between font-bold text-lg mb-6">
               <span>Total:</span>
-              <span className="text-primary-600">${cart.totalPrice}</span>
+              <span className="text-primary-600">
+                {formatVND(cart.totalPrice)}
+              </span>
             </div>
 
             <Link to="/checkout" className="btn-primary w-full text-center">

@@ -21,7 +21,17 @@ const Dashboard = () => {
   const fetchStats = async () => {
     try {
       if (MOCK_MODE) {
-        const orders = JSON.parse(localStorage.getItem("mockOrders") || "[]");
+        let orders = JSON.parse(localStorage.getItem("mockOrders") || "[]");
+
+        // lọc order hợp lệ
+        orders = orders.filter(
+          (o) =>
+            o &&
+            o.orderNumber &&
+            o.totalPrice !== undefined &&
+            o.user &&
+            o.createdAt,
+        );
 
         let meals = JSON.parse(localStorage.getItem("meals") || "[]");
         if (meals.length === 0) {
@@ -38,7 +48,7 @@ const Dashboard = () => {
 
         const recentOrders = [...orders]
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-          .slice(0, 5);
+          .slice(0, 10);
 
         setStats({
           totalUsers: mockUsers.length,
@@ -47,9 +57,6 @@ const Dashboard = () => {
           totalRevenue,
           recentOrders,
         });
-      } else {
-        const { data } = await api.get("/admin/stats");
-        setStats(data.data);
       }
     } catch (error) {
       console.error("Error fetching stats:", error);
