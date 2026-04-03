@@ -1,5 +1,6 @@
 // Mock data for all entities when working without backend
 import { getMeals } from "./mockDb";
+import combo30 from "../img/Combo 30 Bữa + 30 Nước.jpg";
 export const mockMeals = [
   // DISHES
   {
@@ -105,7 +106,8 @@ export const mockMeals = [
     _id: "6",
     name: "Apple Juice",
     nameVi: "Nước Ép Táo",
-    image: "https://placehold.co/500x500/EF4444/FFFFFF?text=Nuoc+Ep+Tao",
+    image:
+      "https://cdn.tgdd.vn/Files/2019/07/14/1179531/nuoc-ep-tao-co-tac-dung-gi-ma-ai-cung-thi-nhau-uong-201907142251530613.jpg",
     price: 17000,
     calories: 120,
     protein: 1,
@@ -124,7 +126,8 @@ export const mockMeals = [
     _id: "7",
     name: "Orange Juice",
     nameVi: "Nước Ép Cam",
-    image: "https://placehold.co/500x500/F97316/FFFFFF?text=Nuoc+Ep+Cam",
+    image:
+      "https://product.hstatic.net/200000723779/product/e1b07ac46dcb4bdd835ec1e98cd4cf83_d1bc01a388704ddd8539a59a8dd6a7b2_grande.jpg",
     price: 15000,
     calories: 110,
     protein: 2,
@@ -143,7 +146,8 @@ export const mockMeals = [
     _id: "8",
     name: "Pineapple Juice",
     nameVi: "Nước Ép Thơm",
-    image: "https://placehold.co/500x500/EAB308/FFFFFF?text=Nuoc+Ep+Thom",
+    image:
+      "https://cdn.tgdd.vn/Files/2021/10/10/1389193/nuoc-ep-thom-bao-nhieu-calo-uong-nuoc-ep-thom-co-giam-can-khong-202110101654365727.jpg",
     price: 15000,
     calories: 130,
     protein: 1,
@@ -162,7 +166,8 @@ export const mockMeals = [
     _id: "9",
     name: "Watermelon Juice",
     nameVi: "Nước Ép Dưa Hấu",
-    image: "https://placehold.co/500x500/F43F5E/FFFFFF?text=Nuoc+Ep+Dua+Hau",
+    image:
+      "https://www.huongnghiepaau.com/wp-content/uploads/2017/08/nuoc-ep-dua-hau-ngot-mat.jpg",
     price: 18000,
     calories: 90,
     protein: 1,
@@ -181,7 +186,7 @@ export const mockMeals = [
     _id: "10",
     name: "Orange & Pineapple Juice",
     nameVi: "Nước Ép Cam Mix Thơm",
-    image: "https://placehold.co/500x500/F59E0B/FFFFFF?text=Cam+Mix+Thom",
+    image: "https://elmich.vn/wp-content/uploads/2024/01/nuoc-ep-cam-dua.jpg",
     price: 25000,
     calories: 135,
     protein: 1,
@@ -200,7 +205,8 @@ export const mockMeals = [
     _id: "11",
     name: "Apple & Celery Juice",
     nameVi: "Nước Ép Táo Mix Cần Tây",
-    image: "https://placehold.co/500x500/84CC16/FFFFFF?text=Tao+Mix+Can+Tay",
+    image:
+      "https://www.btaskee.com/wp-content/uploads/2023/06/nuoc-ep-can-tay-mix-tao.jpg",
     price: 20000,
     calories: 100,
     protein: 1,
@@ -219,7 +225,8 @@ export const mockMeals = [
     _id: "12",
     name: "Watermelon & Apple Juice",
     nameVi: "Nước Ép Dưa Hấu Mix Táo",
-    image: "https://placehold.co/500x500/F43F5E/FFFFFF?text=Dua+Hau+Mix+Tao",
+    image:
+      "https://hutiuthanhdat.vn/wp-content/uploads/2019/01/nuoc-ep-dua-hau-tao.jpg",
     price: 30000,
     calories: 110,
     protein: 1,
@@ -238,7 +245,8 @@ export const mockMeals = [
     _id: "13",
     name: "Carrot, Lemon & Apple Juice",
     nameVi: "Nước Ép Cà Rốt, Chanh, Táo",
-    image: "https://placehold.co/500x500/F97316/FFFFFF?text=Ca+Rot+Chanh+Tao",
+    image:
+      "https://cdn.tienphong.vn/images/a6bf4f60924201126af6849ca45a39809ad9609bcd3e87c546b5f01343c888c7ce0ea14e89737640bd1143155e4bd0f7/2_XWCV.jpg",
     price: 25000,
     calories: 125,
     protein: 2,
@@ -253,53 +261,11 @@ export const mockMeals = [
     isBestSeller: true,
     rating: 4.8,
   },
-
-  // COMBO
   {
     _id: "14",
-    name: "7 Meals + 7 Juices Combo",
-    nameVi: "7 Bữa + 7 Nước",
-    image: "https://placehold.co/500x500/10B981/FFFFFF?text=Combo+7+Ngay",
-    price: 450000,
-    calories: 3200,
-    protein: 200,
-    carb: 300,
-    fat: 80,
-    category: "weight-loss",
-    ingredients: ["7 random healthy meals", "7 random juices"],
-    ingredientsVi: ["7 bữa ăn ngẫu nhiên", "7 loại nước ép"],
-    description: "A complete 7-day combo to kickstart your healthy diet.",
-    descriptionVi: "Combo 7 ngày hoàn chỉnh để bắt đầu chế độ ăn lành mạnh.",
-    isAvailable: true,
-    isBestSeller: true,
-    rating: 4.9,
-  },
-  {
-    _id: "15",
-    name: "7 Meals + 7 Juices (with Salmon) Combo",
-    nameVi: "7 Bữa + 7 Nước mix cá hồi",
-    image:
-      "https://placehold.co/500x500/065F46/FFFFFF?text=Combo+7+Ngay+(Ca+Hoi)",
-    price: 490000,
-    calories: 3400,
-    protein: 220,
-    carb: 310,
-    fat: 90,
-    category: "muscle-gain",
-    ingredients: ["7 healthy meals including salmon", "7 juices"],
-    ingredientsVi: ["7 bữa ăn có mix cá hồi", "7 loại nước ép"],
-    description: "Premium 7-day combo including rich salmon dishes.",
-    descriptionVi: "Combo 7 ngày cao cấp bao gồm các món cá hồi bổ dưỡng.",
-    isAvailable: true,
-    isBestSeller: false,
-    rating: 4.8,
-  },
-  {
-    _id: "16",
     name: "30 Meals + 30 Juices Monthly Combo",
     nameVi: "30 Bữa + 30 Nước",
-    image:
-      "https://placehold.co/500x500/3B82F6/FFFFFF?text=Monthly+Plan+(30+Ngay)",
+    image: combo30,
     price: 1800000,
     calories: 14000,
     protein: 950,
@@ -315,10 +281,10 @@ export const mockMeals = [
     rating: 5.0,
   },
   {
-    _id: "17",
+    _id: "15",
     name: "Fit Package (Premium)",
     nameVi: "Gói Fit (Premium)",
-    image: "https://placehold.co/500x500/1E3A8A/FFFFFF?text=Goi+Fit+(Premium)",
+    image: combo30,
     price: 2000000,
     calories: 16000,
     protein: 1100,
