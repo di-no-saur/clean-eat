@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import api from "../../utils/api";
 import { FaUsers, FaClipboard, FaUtensils, FaDollarSign } from "react-icons/fa";
 import { mockUsers, mockMeals } from "../../utils/mockData";
+import { formatVND } from "../../utils/formatCurrency";
 const MOCK_MODE = true;
 
 const Dashboard = () => {
@@ -86,7 +87,7 @@ const Dashboard = () => {
     },
     {
       title: t("totalRevenue"),
-      value: `$${stats?.totalRevenue || 0}`,
+      value: formatVND(stats?.totalRevenue || 0),
       icon: FaDollarSign,
       color: "bg-purple-100 text-purple-600",
     },
@@ -133,7 +134,7 @@ const Dashboard = () => {
                   <td className="py-3 font-semibold">{order.orderNumber}</td>
                   <td className="py-3">{order.user?.name}</td>
                   <td className="py-3 font-bold text-green-600">
-                    ${order.totalPrice}
+                    {formatVND(order.totalPrice)}
                   </td>
                   <td className="py-3">
                     <span className="px-2 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 capitalize">
