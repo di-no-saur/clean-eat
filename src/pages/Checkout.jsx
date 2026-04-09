@@ -466,7 +466,7 @@ const Checkout = () => {
                         <FaCheckCircle className="inline mr-2 text-green-600" />
                         You will pay{" "}
                         <strong className="text-lg">
-                          {cart.totalPrice.toLocaleString()}đ
+                          {formatVND(cart.totalPrice)}
                         </strong>{" "}
                         in cash when receiving your order
                       </p>
