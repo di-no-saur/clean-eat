@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import api from '../utils/api';
 import { FaArrowLeft, FaBox, FaMapMarkerAlt, FaPhoneAlt, FaCheckCircle } from 'react-icons/fa';
 import { mockOrders } from '../utils/mockData';
-
+import { formatVND } from "../utils/formatCurrency";
 const MOCK_MODE = true;
 
 const OrderDetail = () => {
@@ -117,8 +117,10 @@ const OrderDetail = () => {
                       <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
                     </div>
                     <div className="text-right">
-                      <p className="font-semibold">${item.price}</p>
-                      <p className="text-sm text-gray-600">{item.quantity} × ${item.price}</p>
+                      <p className="font-semibold">{formatVND(item.price)}</p>
+                      <p className="text-sm text-gray-600">
+  {item.quantity} × {formatVND(item.price)}
+</p>
                     </div>
                   </div>
                 ))}
@@ -127,7 +129,9 @@ const OrderDetail = () => {
               <div className="border-t mt-4 pt-4">
                 <div className="flex justify-between text-lg font-bold">
                   <span>Total:</span>
-                  <span className="text-primary-600">${order.totalPrice}</span>
+                  <span className="text-primary-600">
+  {formatVND(order.totalPrice)}
+</span>
                 </div>
                 <div className="flex justify-between text-sm text-gray-600 mt-2">
                   <span>Total Calories:</span>
@@ -199,7 +203,7 @@ const OrderDetail = () => {
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span>Items:</span>
-                <span>${order.totalPrice}</span>
+                <span>{formatVND(order.totalPrice)}</span>
               </div>
               <div className="flex justify-between">
                 <span>Shipping:</span>
@@ -211,7 +215,9 @@ const OrderDetail = () => {
 
             <div className="flex justify-between font-bold text-lg">
               <span>Total:</span>
-              <span className="text-primary-600">${order.totalPrice}</span>
+              <span className="text-primary-600">
+  {formatVND(order.totalPrice)}
+</span>
             </div>
 
             {/* QR Code */}
