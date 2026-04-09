@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../../utils/api";
 import { toast } from "react-toastify";
 import { mockOrders } from "../../utils/mockData";
-
+import { formatVND } from "../../utils/formatCurrency";
 const MOCK_MODE = true;
 
 const Orders = () => {
@@ -133,7 +133,7 @@ const Orders = () => {
                 <td className="px-6 py-3 font-semibold">{order.orderNumber}</td>
                 <td className="px-6 py-3">{order.user?.name}</td>
                 <td className="px-6 py-3 font-bold text-green-600">
-                  ${order.totalPrice}
+                  {formatVND(order.totalPrice)}
                 </td>
                 <td className="px-6 py-3">
                   <select
