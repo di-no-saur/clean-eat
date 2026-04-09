@@ -4,7 +4,7 @@ import api from "../../utils/api";
 import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { mockMeals } from "../../utils/mockData";
-
+import { formatVND } from "../../utils/formatCurrency";
 const MOCK_MODE = true;
 
 const Meals = () => {
@@ -399,7 +399,7 @@ const Meals = () => {
             {meals.map((meal) => (
               <tr key={meal._id} className="border-b hover:bg-gray-50">
                 <td className="px-6 py-3 font-semibold">{meal.name}</td>
-                <td className="px-6 py-3">${meal.price}</td>
+                <td className="px-6 py-3">{formatVND(meal.price)}</td>
                 <td className="px-6 py-3">{meal.calories} cal</td>
                 <td className="px-6 py-3 capitalize">{meal.category}</td>
                 <td className="px-6 py-3 flex gap-2">
