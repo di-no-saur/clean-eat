@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import api from "../../utils/api";
-import { FaUsers, FaClipboard, FaUtensils, FaDongSign } from "react-icons/fa";
+import { FaUsers, FaClipboard, FaUtensils } from "react-icons/fa";
+import { FaDongSign } from "react-icons/fa6";
 import { mockUsers, mockMeals } from "../../utils/mockData";
 import { formatVND } from "../../utils/formatCurrency";
 const MOCK_MODE = true;
