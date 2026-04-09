@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useCart } from "../context/UseCart";
 import { useAuth } from "../context/AuthContext";
 import api from "../utils/api";
+import { formatVND } from "../utils/formatCurrency";
 import { toast } from "react-toastify";
 import {
   FaCopy,
@@ -552,7 +553,7 @@ const Checkout = () => {
                   <span>
                     {isVi ? item.meal.nameVi : item.meal.name} x {item.quantity}
                   </span>
-                  <span>${(item.meal.price * item.quantity).toFixed(2)}</span>
+                  <span>{formatVND(item.meal.price * item.quantity)}</span>
                 </div>
               ))}
             </div>
@@ -562,7 +563,7 @@ const Checkout = () => {
             <div className="space-y-2">
               <div className="flex justify-between text-gray-600">
                 <span>Subtotal:</span>
-                <span>${cart.totalPrice}</span>
+                <span>{formatVND(cart.totalPrice)}</span>
               </div>
               <div className="flex justify-between text-gray-600">
                 <span>Shipping:</span>
@@ -578,7 +579,7 @@ const Checkout = () => {
 
             <div className="flex justify-between font-bold text-lg">
               <span>Total:</span>
-              <span className="text-primary-600">${cart.totalPrice}</span>
+              <span className="text-primary-600">{formatVND(cart.totalPrice)}</span>
             </div>
           </div>
         </div>
