@@ -50,7 +50,7 @@ const Dashboard = () => {
 
         const recentOrders = [...orders]
           .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-          .slice(0, 10);
+          .slice(0, 30);
 
         setStats({
           totalUsers: mockUsers.length,
