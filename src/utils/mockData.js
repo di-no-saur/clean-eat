@@ -403,9 +403,9 @@ export const mockOrders = [
         quantity: 1,
         calories: mockMeals[12].calories,
       },
-      ]
-    totalPrice: mockMeals[5].price + mockMeals[12].price,
-    totalCalories: mockMeals[5].calories + mockMeals[12].calories,
+      ],
+    totalPrice: mockMeals[3].price + mockMeals[12].price,
+    totalCalories: mockMeals[3].calories + mockMeals[12].calories,
     shippingInfo: {
       name: "Nguyễn Thu Hiền",
       phone: "090255114328",
