@@ -1,4 +1,4 @@
-import { mockMeals, mockUsers } from "./mockData";
+import { mockMeals, mockUsers, mocOrders } from "./mockData";
 
 export const initDB = () => {
   // seed meals
@@ -13,7 +13,7 @@ export const initDB = () => {
 
   // seed orders
   if (!localStorage.getItem("mockOrders")) {
-    localStorage.setItem("mockOrders", JSON.stringify([]));
+    localStorage.setItem("mockOrders", JSON.stringify(mocOrders));
   }
 };
 
