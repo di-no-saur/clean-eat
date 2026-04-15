@@ -1170,7 +1170,7 @@ export const mockOrders = [
 export const mockUsers = [
   {
     _id: "user123",
-    name: "Test User",
+    name: "User",
     email: "user@eatclean.com",
     phone: "0907654321",
     role: "user",
@@ -1187,7 +1187,7 @@ export const mockUsers = [
   {
     _id: "nbh",
     name: "Nhữ Bá Hùng",
-    email: "nbh@gmail.com",
+    email: "Hungneon11@gmail.com",
     phone: "0909633369",
     role: "user",
     isActive: true,
@@ -1195,7 +1195,7 @@ export const mockUsers = [
   {
     _id: "nch",
     name: "Ngô Công Hậu",
-    email: "nch@gmail.com",
+    email: "ngoconghau304444@gmail.com",
     phone: "0707122474",
     role: "user",
     isActive: true,
@@ -1203,7 +1203,7 @@ export const mockUsers = [
   {
     _id: "dct",
     name: "Đặng Chí Tâm",
-    email: "dct@gmail.com",
+    email: "ratsios1307@gmail.com",
     phone: "0909968895",
     role: "user",
     isActive: true,
@@ -1211,7 +1211,7 @@ export const mockUsers = [
   {
     _id: "vvd",
     name: "Vũ Việt Dũng",
-    email: "vvd@gmail.com",
+    email: "dungvietvu03@gmail.com",
     phone: "090255465",
     role: "user",
     isActive: true,
@@ -1219,7 +1219,7 @@ export const mockUsers = [
   {
     _id: "dmkn",
     name: "Đào Mai Khánh Nhi",
-    email: "dmkn@gmail.com",
+    email: "khanhnhidaomai123@gmail.com",
     phone: "0707152685",
     role: "user",
     isActive: true,
@@ -1227,7 +1227,7 @@ export const mockUsers = [
   {
     _id: "ntt",
     name: "Nguyễn Thành Trí",
-    email: "ntt@gmail.com",
+    email: "thanhtri0849@gmail.com",
     phone: "0909831149",
     role: "user",
     isActive: true,
@@ -1235,7 +1235,7 @@ export const mockUsers = [
   {
     _id: "nldk",
     name: "Nguyễn Lê Đăng Khoa",
-    email: "nldk@gmail.com",
+    email: "khoagearup@gmail.com",
     phone: "0909636658",
     role: "user",
     isActive: true,
@@ -1243,7 +1243,7 @@ export const mockUsers = [
   {
     _id: "ttt",
     name: "Tăng Thạch Thiên",
-    email: "ttt@gmail.com",
+    email: "tangthachthien528@gmail.com",
     phone: "0707196655",
     role: "user",
     isActive: true,
@@ -1251,7 +1251,7 @@ export const mockUsers = [
   {
     _id: "tthth",
     name: "Trương Huỳnh Trung Hiếu",
-    email: "tthth@gmail.com",
+    email: "hieutruong647@gmail.com",
     phone: "0707362518",
     role: "user",
     isActive: true,
@@ -1259,7 +1259,7 @@ export const mockUsers = [
   {
     _id: "ntt2",
     name: "Ngô Tấn Trung",
-    email: "ntt2@gmail.com",
+    email: "Tocyber1102@gmail.com",
     phone: "0909685582",
     role: "user",
     isActive: true,
@@ -1267,15 +1267,15 @@ export const mockUsers = [
   {
     _id: "dad",
     name: "Đỗ Anh Duy",
-    email: "dad@gmail.com",
+    email: "anhduydo23@gmail.com",
     phone: "0707856447",
     role: "user",
     isActive: true,
   },
   {
     _id: "pgq",
-    name: "Phạm Gia Quý",
-    email: "pgq@gmail.com",
+    name: "Phạm Gia Quy",
+    email: "quygiapham@gmail.com",
     phone: "0707633941",
     role: "user",
     isActive: true,
@@ -1283,7 +1283,7 @@ export const mockUsers = [
   {
     _id: "ntv",
     name: "Nguyễn Thảo Vi",
-    email: "ntv@gmail.com",
+    email: "Thaoviandmia@gmail.com",
     phone: "0909658245",
     role: "user",
     isActive: true,
@@ -1291,7 +1291,7 @@ export const mockUsers = [
   {
     _id: "ntk",
     name: "Nguyễn Trọng Kim",
-    email: "ntk@gmail.com",
+    email: "cv.nguyentrongkim@gmail.com",
     phone: "0909638959",
     role: "user",
     isActive: true,
@@ -1299,7 +1299,7 @@ export const mockUsers = [
   {
     _id: "ntn",
     name: "Nguyễn Thành Nhân",
-    email: "ntn@gmail.com",
+    email: "ntnhan0812a@gmail.com",
     phone: "0909878574",
     role: "user",
     isActive: true,
@@ -1307,7 +1307,7 @@ export const mockUsers = [
   {
     _id: "ttgb",
     name: "Trương Trần Gia Bảo",
-    email: "ttgb@gmail.com",
+    email: "baotranmarcus69@gmail.com",
     phone: "0707856534",
     role: "user",
     isActive: true,
@@ -1316,7 +1316,7 @@ export const mockUsers = [
   {
     _id: "ndmq",
     name: "Nguyễn Đỗ Minh Quân",
-    email: "ndmq@gmail.com",
+    email: "rongga159china@gmail.com",
     phone: "0795236841",
     role: "user",
     isActive: true,
@@ -1324,7 +1324,7 @@ export const mockUsers = [
   {
     _id: "nth",
     name: "Nguyễn Thu Hiền",
-    email: "nth@gmail.com",
+    email: "thuhien3377@gmail.com",
     phone: "0957781351",
     role: "user",
     isActive: true,
@@ -1332,7 +1332,7 @@ export const mockUsers = [
   {
     _id: "tvh",
     name: "Trần Việt Hoàng",
-    email: "tvh@gmail.com",
+    email: "viethoang9203@gmail.com",
     phone: "0707488765",
     role: "user",
     isActive: true,
@@ -1340,7 +1340,7 @@ export const mockUsers = [
   {
     _id: "hmp",
     name: "Hoàng Mạnh Phúc",
-    email: "hmp@gmail.com",
+    email: "happyhoang2791@gmail.com",
     phone: "0707483572",
     role: "user",
     isActive: true,
@@ -1348,7 +1348,7 @@ export const mockUsers = [
   {
     _id: "nmt",
     name: "Nguyễn Minh Tú",
-    email: "nmt@gmail.com",
+    email: "drtu123@gmail.com",
     phone: "0707143758",
     role: "user",
     isActive: true,
@@ -1357,7 +1357,7 @@ export const mockUsers = [
   {
     _id: "ltn",
     name: "Lê Thị Ngọc",
-    email: "ltn@gmail.com",
+    email: "Lengocngoc28112003@gmail.com",
     phone: "0909875265",
     role: "user",
     isActive: true,
@@ -1365,7 +1365,7 @@ export const mockUsers = [
   {
     _id: "mvd",
     name: "Mai Văn Định",
-    email: "mvd@gmail.com",
+    email: "dinhdaovan1999@gmail.com",
     phone: "0909653685",
     role: "user",
     isActive: true,
@@ -1373,7 +1373,7 @@ export const mockUsers = [
   {
     _id: "nvtd",
     name: "Ngô Văn Tiến Dũng",
-    email: "nvtd@gmail.com",
+    email: "Corndvan01@gmail.com",
     phone: "0909125478",
     role: "user",
     isActive: true,
