@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import api from "../../utils/api";
 import { FaUsers, FaClipboard, FaUtensils } from "react-icons/fa";
 import { FaDongSign } from "react-icons/fa6";
-import { mockUsers, mockMeals } from "../../utils/mockData";
+import { mockUsers, mockMeals, mockOrders } from "../../utils/mockData";
 import { formatVND } from "../../utils/formatCurrency";
 const MOCK_MODE = true;
 
@@ -24,7 +24,10 @@ const Dashboard = () => {
     try {
       if (MOCK_MODE) {
         let orders = JSON.parse(localStorage.getItem("mockOrders") || "[]");
-
+        if (!orders || orders.length === 0) {
+          localStorage.setItem("mockOrders", JSON.stringify(mockOrders));
+          orders = mockOrders;
+        }
         // lọc order hợp lệ
         orders = orders.filter(
           (o) =>

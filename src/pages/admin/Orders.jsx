@@ -22,7 +22,11 @@ const Orders = () => {
         let localOrders = JSON.parse(
           localStorage.getItem("mockOrders") || "[]",
         );
-
+        // 👉 FIX: nếu chưa có thì seed
+        if (!localOrders || localOrders.length === 0) {
+          localStorage.setItem("mockOrders", JSON.stringify(mockOrders));
+          localOrders = mockOrders;
+        }
         // lọc order hợp lệ
         localOrders = localOrders.filter(
           (order) =>
