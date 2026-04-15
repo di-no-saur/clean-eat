@@ -128,7 +128,6 @@ const Orders = () => {
               <th className="px-6 py-3 font-semibold">Amount</th>
               <th className="px-6 py-3 font-semibold">Status</th>
               <th className="px-6 py-3 font-semibold">Payment</th>
-              <th className="px-6 py-3 font-semibold">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -162,11 +161,6 @@ const Orders = () => {
                     <option value="paid">Paid</option>
                     <option value="failed">Failed</option>
                   </select>
-                </td>
-                <td className="px-6 py-3">
-                  <button className="text-blue-600 hover:underline text-xs">
-                    View
-                  </button>
                 </td>
               </tr>
             ))}
